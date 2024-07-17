@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_product_template_form_custom" model="ir.ui.view">
+        <field name="name">product.template.form.custom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="location"/>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="hsn_code"/>
+            </xpath>
+            <xpath expr="//field[@name='hsn_code']" position="after">
+                <field name="hsn_description"/>
+            </xpath>
+            <xpath expr="//field[@name='hsn_description']" position="after">
+                <field name="qty"/>
+            </xpath>
+            <xpath expr="//field[@name='qty']" position="after">
+                <field name="issued_qty"/>
+            </xpath>
+            <xpath expr="//field[@name='issued_qty']" position="after">
+                <field name="total_qty"/>
+            </xpath>
+            <xpath expr="//form//sheet//page[@name='general_information']//field[@name='categ_id']" position="after">
+                <field name="sub_category"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Product Info">
+                    <group>
+                        <group>
+                            <field name="package"/>
+                            <field name="part_number"/>
+                            <field name="power_rating"/>
+                            <field name="temp_coefficient"/>
+                            <field name="min_oper_temp"/>
+                            <field name="max_oper_temp"/>
+                            <field name="Value"/>
+                            <field name="min_vlt"/>
+                            <field name="max_vlt"/>
+                            <field name="load_capaci"/>
+                            <field name="no_of_position"/>
+                            <field name="pitch"/>
+                            <field name="dsv"/>
+                            <field name="vgs"/>
+                            <field name="cc_m"/>
+                        </group>
+                        <group>
+                            <field name="voltage_rating"/>
+                            <field name="tolerance"/>
+                            <field name="watts"/>
+                            <field name="manufacturer"/>
+                            <field name="supplier"/>
+                            <field name="forward_voltage"/>
+                            <field name="breakdown_voltage"/>
+                            <field name="rev_voltage"/>
+                            <field name="forward_current"/>
+                            <field name="output_current"/>
+                            <field name="output_voltage"/>
+                            <field name="vol_type"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_template_search_custom" model="ir.ui.view">
+        <field name="name">product.template.search.custom</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Product Templates">
+                <field name="sub_category" string="Sub Category"/>
+                <filter string="Category" name="category" domain="[('categ_id', 'ilike', self)]"/>
+                <filter string="Sub Category" name="sub_category_filter" domain="[('sub_category', 'ilike', self)]"/>
+                <filter string="package" name="package_filter" domain="[('package', 'ilike', 'self')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

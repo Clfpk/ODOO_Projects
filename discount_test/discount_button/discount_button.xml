@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="pos_discount.DiscountButton" position="replace">
+
+        <template id="custom_pos_discount_button" inherit_id="pos_discount.DiscountButton"/>
+        <xpath expr="//button[contains(@class, 'discount-button')]" position="attributes">
+        <t t-name="pos_discount.Discount_test_Button">
+                <span class="control-button js_discount btn btn-light rounded-0 fw-bolder">
+                    <i class="fa fa-tag me-1"></i>
+                    <span>Discount test</span>
+                </span>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

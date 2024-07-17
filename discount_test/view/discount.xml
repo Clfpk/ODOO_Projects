@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="point_of_sale_template" inherit_id="point_of_sale.template">
+            <xpath expr="//button[@id='discount_button']" position="attributes">
+                <attribute name="t-if">pos.config.hide_discount_button</attribute>
+            </xpath>
+        </template>
+    </data>
+</odoo>

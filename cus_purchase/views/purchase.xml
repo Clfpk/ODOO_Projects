@@ -1,0 +1,70 @@
+<!--&lt;!&ndash;<odoo>&ndash;&gt;-->
+<!--&lt;!&ndash;    <record id="view0_mail_mail_form_inherited" models="ir.ui.view">&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="name">mail.mail.form.inherited</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="models">mail.mail</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="inherit_id" ref="mail.view_mail_form"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="arch" type="xml">&ndash;&gt;-->
+<!--&lt;!&ndash;            <xpath expr="/form/sheet/notebook/page[@name='Body']" position="inside">&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="receipt_status"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;            <notebook>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                <page string="Invoice &amp; Double &amp; Approval &amp; Setting"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                      name="invoice_double_approval_setting">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                    <group name="configure_heading" string="CONFIGURE INVOICE APPROVALS" priority="2"/>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                    <div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                        <span class="o_form_label_note"></span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                        <setting id="automatic_orders" help="Double Validation Amount">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                            <field name="lock_confirmed_po"/>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                        </setting>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;&lt;!&ndash;                        <field name="vendor_bill_checkbox" string="Vendor Bill"/>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;&lt;!&ndash;                        <field name="validation_lock_po" string="Vendor Bill Double Validate"/>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;                </page>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash;            </notebook>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        </field>&ndash;&gt;-->
+<!--&lt;!&ndash;    </record>&ndash;&gt;-->
+<!--&lt;!&ndash;</odoo>&ndash;&gt;-->
+<odoo>
+    <record id="action_post_invoices" model="ir.actions.server">
+        <field name="name">Post Invoices</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = env['account.move'].post_invoice(context.get('active_ids'))
+        </field>
+    </record>
+
+    <menuitem id="menu_post_invoices" name="Post Invoices"
+              parent="account.menu_finance" sequence="10" action="action_post_invoices"/>
+
+    <record id="view_account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_invoice_sent']" position="before">
+                <button name="%(action_post_invoices)d" type="action" string="Post"/>
+            </xpath>
+<!--            <xpath expr="//header" position="inside">-->
+<!--                <button name="%(action_post_invoices)d" type="action" string="Post"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+</odoo>
+
+        <!--&lt;!&ndash; <xpath expr="//form//header[@name='action_invoice_sent']" position="before">&ndash;&gt;-->
+        <!--&lt;!&ndash;                <button name="action_post_invoices" string="Post"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+        <!--<odoo>-->
+        <!--    <record id="view_move_form_posted_only" models="ir.ui.view">-->
+        <!--        <field name="name">account.move.form.posted.only</field>-->
+        <!--        <field name="models">account.move</field>-->
+        <!--        <field name="inherit_id" ref="account.view_move_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <xpath expr="//field[@name='state']" position="attributes">-->
+        <!--                <attribute name="attrs">{'invisible': [('state', '!=', 'posted')]}</attribute>-->
+        <!--            </xpath>-->
+        <!--        </field>-->
+        <!--    </record>-->
+        <!--</odoo>-->
